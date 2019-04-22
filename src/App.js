@@ -36,6 +36,26 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleAdd = () =>{
+    console.log("this handle add");
+    var counters= this.state.counters.slice();
+    var newId = this.state.counters[counters.length-1].id+1;
+    counters.push({id:newId,value:0});
+    this.setState({counters});
+  }
+
+  handleDecrement=counter=>{
+    console.log("Decrement button clicked");
+    const counters = [...this.state.counters];
+    const index=counters.indexOf(counter);
+    counters[index]={...counter};
+    if(counters[index].value >0) {
+      counters[index].value--;
+    }
+    this.setState({counters});
+
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -45,8 +65,10 @@ class App extends Component {
           counters={this.state.counters} 
           onDelete={this.handleDelete}
           onIncrement ={this.handleIncrement}
+          onDecrement={this.handleDecrement}
           onReset={this.handleReset} 
           />
+          <button className="btn btn-sm btn-primary m-2" onClick={this.handleAdd}>Add Item</button>
         </main>
       </React.Fragment>
     );
